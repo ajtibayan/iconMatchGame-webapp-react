@@ -1,24 +1,58 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import { MixOrMatch } from "./controllers/MixOrMatchController";
+import GameContainer from "./components/GameContainer";
+import GameTitleAndOverlays from "./components/GameTitleAndOverlays";
+
+// Assets
+import { cardImgs } from "./data/origCardImgs";
+import "./App.css";
 
 function App() {
+  const [cardsArray, setCardsArray] = useState(cardImgs);
+
+  function ready() {
+    let overlays = Array.from(document.getElementsByClassName("overlay-text"));
+    let cards = Array.from(document.getElementsByClassName("card"));
+    let game = new MixOrMatch(100, cards);
+
+    overlays.forEach((overlay) => {
+      overlay.addEventListener("click", () => {
+        shuffleCards(cardsArray);
+        overlay.classList.remove("visible");
+        game.startGame();
+      });
+    });
+
+    cards.forEach((card) => {
+      card.addEventListener("click", () => {
+        game.flipCard(card);
+      });
+    });
+  }
+
+  useEffect(() => {
+    shuffleCards(cardsArray);
+    if (document.readyState == "loading") {
+      document.addEventListener("DOMContentLoaded", ready);
+    } else {
+      ready();
+    }
+  }, []);
+
+  const shuffleCards = (cArray) => {
+    const nArray = [...cArray];
+    for (let i = nArray.length - 1; i > 0; i--) {
+      let randIndex = Math.floor(Math.random() * (i + 1));
+      [nArray[i], nArray[randIndex]] = [nArray[randIndex], nArray[i]];
+    }
+    setCardsArray(nArray);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <GameTitleAndOverlays />
+      <GameContainer cardsArray={cardsArray} />
+    </>
   );
 }
 

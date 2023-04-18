@@ -1,38 +1,399 @@
-.App {
+@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100vh;
+  /* cursor: url(../public/Assets/Cursors/Ghost.cur), auto; */
+  font-family: "VT323", monospace;
+}
+
+body {
+  font-family: "VT323", monospace;
+  margin: 0;
+  background: radial-gradient(#8486ff, #c2c3ff);
+}
+
+.page-title {
+  color: #4a4dff;
+  font-weight: normal;
+  text-align: center;
+  font-size: 4.5em;
+}
+
+.game-info-container {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+}
+
+.game-info {
+  color: #fffb01;
+  font-size: 2.5em;
+}
+
+.game-container {
+  margin: 50px auto;
+  display: grid;
+  grid-template-areas:
+    " .  .  .  ."
+    "card1 card2 card3 ."
+    "card4 card5 card6 card7"
+    "card8 card9 card10 ."
+    "card11 card12 card13 card14"
+    "card15 card16 card17 ."
+    "card18 card19 card20 card21"
+    "card22 card23 card24 .";
+  grid-gap: 10px;
+  justify-content: center;
+  perspective: 500px;
+}
+
+.card {
+  position: relative;
+  /* cursor: url("../public/Assets/Cursors/GhostHover.cur"), auto; */
+  cursor: pointer;
+  height: 60px;
+  width: 60px;
+  margin: 2px;
+}
+
+.card:nth-child(2) {
+  grid-area: card1;
+}
+
+.card:nth-child(3) {
+  grid-area: card2;
+}
+
+.card:nth-child(4) {
+  grid-area: card3;
+}
+
+.card:nth-child(5) {
+  grid-area: card4;
+}
+
+.card:nth-child(6) {
+  grid-area: card5;
+}
+
+.card:nth-child(7) {
+  grid-area: card6;
+}
+
+.card:nth-child(8) {
+  grid-area: card7;
+}
+
+.card:nth-child(9) {
+  grid-area: card8;
+}
+
+.card:nth-child(10) {
+  grid-area: card9;
+}
+
+.card:nth-child(11) {
+  grid-area: card10;
+}
+
+.card:nth-child(12) {
+  grid-area: card11;
+}
+
+.card:nth-child(13) {
+  grid-area: card12;
+}
+
+.card:nth-child(14) {
+  grid-area: card13;
+}
+
+.card:nth-child(15) {
+  grid-area: card14;
+}
+
+.card:nth-child(16) {
+  grid-area: card15;
+}
+
+.card:nth-child(17) {
+  grid-area: card16;
+}
+
+.card:nth-child(18) {
+  grid-area: card17;
+}
+
+.card:nth-child(19) {
+  grid-area: card18;
+}
+
+.card:nth-child(20) {
+  grid-area: card19;
+}
+
+.card:nth-child(21) {
+  grid-area: card20;
+}
+
+.card:nth-child(22) {
+  grid-area: card21;
+}
+
+.card:nth-child(23) {
+  grid-area: card22;
+}
+
+.card:nth-child(24) {
+  grid-area: card23;
+}
+
+.card:nth-child(25) {
+  grid-area: card24;
+}
+
+.card:nth-child(2),
+.card:nth-child(3),
+.card:nth-child(4) {
+  margin-left: calc(50% + 17px);
+}
+
+.card:nth-child(5),
+.card:nth-child(6),
+.card:nth-child(7),
+.card:nth-child(8) {
+  margin-top: calc(-30%);
+  margin-left: calc(12px);
+}
+
+.card:nth-child(9),
+.card:nth-child(10),
+.card:nth-child(11),
+.card:nth-child(16),
+.card:nth-child(17),
+.card:nth-child(18),
+.card:nth-child(23),
+.card:nth-child(24),
+.card:nth-child(25) {
+  margin-top: calc(-30%);
+  margin-left: calc(50% + 17px);
+}
+
+.card:nth-child(12),
+.card:nth-child(13),
+.card:nth-child(14),
+.card:nth-child(15),
+.card:nth-child(19),
+.card:nth-child(20),
+.card:nth-child(21),
+.card:nth-child(22) {
+  margin-top: calc(-30%);
+  margin-left: calc(12px);
+}
+
+.card-face {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  border-width: 1px;
+  border-style: solid;
+  overflow: hidden;
+  transition: transform 500ms ease-in-out;
+  backface-visibility: hidden;
+}
+
+.card.visible .card-back {
+  -webkit-transform: rotate3d(45, 110, 0, -180deg);
+  transform: rotate3d(45, 110, 0, -180deg);
+}
+
+.card.visible .card-front {
+  transform: rotate(45deg);
+}
+
+.card.matched .card-front .card-value,
+.card.matched .card-front .card-icon {
+  animation: dance 0.25s linear 3 500ms;
+}
+
+.card-back {
+  background-color: white;
+  border-color: #0004ff;
+  transform: rotate(45deg);
+}
+
+.card-value {
+  position: relative;
+  transition: transform 100ms ease-in-out;
+  transform: scale(0.9);
+}
+
+.fa-solid {
+  font-size: 1.75rem;
+  color: #4a4dff;
+  transition: font-size 100ms ease-in-out;
+  transform: rotate(-45deg);
+}
+
+.card-face:hover .fa-solid {
+  font-size: 2.25rem;
+}
+
+.card-front:hover .card-value {
+  transform: scale(1);
+}
+
+.card-front {
+  background-color: #ffbb89;
+  border-color: #333;
+  -webkit-transform: rotate3d(45, 110, 0, -180deg);
+  transform: rotate3d(45, 110, 0, -180deg);
+}
+
+.overlay-text {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  display: none;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: #fffb01;
+  transition: background-color 500ms, font-size 500ms;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.overlay-text-small {
+  font-size: 0.3em;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.overlay-text.visible {
+  display: flex;
+  animation: overlay-grow 500ms forwards;
+}
+
+@keyframes dance {
+  0%,
+  100% {
+    transform: rotate(-45deg);
+  }
+  25% {
+    transform: rotate(-60deg);
+  }
+  75% {
+    transform: rotate(-30deg);
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
+@keyframes overlay-grow {
   from {
-    transform: rotate(0deg);
+    background-color: rgba(0, 0, 0, 0);
+    font-size: 0;
   }
   to {
-    transform: rotate(360deg);
+    background-color: rgba(0, 0, 0, 0.8);
+    font-size: 10em;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .page-title {
+    font-size: 6em;
+  }
+
+  .game-info {
+    font-size: 4em;
+  }
+
+  .card {
+    height: 100px;
+    width: 100px;
+    margin: 15px;
+  }
+
+  .fa-solid {
+    font-size: 3.25rem;
+  }
+
+  .card-face:hover .fa-solid {
+    font-size: 3.5rem;
+  }
+}
+
+@media only screen and (min-width: 1025px) {
+  /* .card:nth-child(2),
+.card:nth-child(3),
+.card:nth-child(4),
+.card:nth-child(5) {
+  margin-left: calc(50% + 25px);
+}
+
+.card:nth-child(6),
+.card:nth-child(7),
+.card:nth-child(8),
+.card:nth-child(9),
+.card:nth-child(10) {
+  margin-top: calc(-30%);
+  margin-left: calc(20px);
+}
+
+.card:nth-child(11),
+.card:nth-child(12),
+.card:nth-child(13),
+.card:nth-child(14),
+.card:nth-child(20),
+.card:nth-child(21),
+.card:nth-child(22),
+.card:nth-child(23) {
+  margin-top: calc(-30%);
+  margin-left: calc(50% + 25px);
+}
+
+.card:nth-child(15),
+.card:nth-child(16),
+.card:nth-child(17),
+.card:nth-child(18),
+.card:nth-child(19) {
+  margin-top: calc(-30%);
+  margin-left: calc(20px);
+} */
+
+  /* .game-container {
+    margin: 50px auto;
+    display: grid;
+    grid-template-areas:
+      " .  .  .  .  ."
+      "card1 card2 card3 card4 ."
+      "card5 card6 card7 card8 card9"
+      "card10 card11 card12 card13 ."
+      "card14 card15 card16 card17 card18"
+      "card19 card20 card21 card22 .";
+    grid-gap: 10px;
+    justify-content: center;
+  } */
+
+  .card {
+    height: 100px;
+    width: 100px;
+    margin: 15px;
+  }
+
+  .fa-solid {
+    font-size: 3.25rem;
+  }
+
+  .card-face:hover .fa-solid {
+    font-size: 3.5rem;
   }
 }
