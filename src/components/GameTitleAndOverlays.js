@@ -3,7 +3,7 @@ import React from "react";
 const GameTitleAndOverlays = () => {
   return (
     <>
-      <h1 className="page-title">Mix-Or-Match</h1>
+      <h1 className="page-title">Icon Matching Game</h1>
       <div className="overlay-text visible">Click to Start</div>
       <div id="game-over-text" className="overlay-text">
         GAME OVER
