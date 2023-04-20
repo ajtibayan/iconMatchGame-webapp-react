@@ -1,58 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { MixOrMatch } from "./controllers/MixOrMatchController";
-import GameContainer from "./components/GameContainer";
-import GameTitleAndOverlays from "./components/GameTitleAndOverlays";
+import React from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
 
 // Assets
-import { cardImgs } from "./data/origCardImgs";
 import "./App.css";
+import GameHome from "./views/GameHome";
 
 function App() {
-  const [cardsArray, setCardsArray] = useState(cardImgs);
-
-  function ready() {
-    let overlays = Array.from(document.getElementsByClassName("overlay-text"));
-    let cards = Array.from(document.getElementsByClassName("card"));
-    let game = new MixOrMatch(100, cards);
-
-    overlays.forEach((overlay) => {
-      overlay.addEventListener("click", () => {
-        shuffleCards(cardsArray);
-        overlay.classList.remove("visible");
-        game.startGame();
-      });
-    });
-
-    cards.forEach((card) => {
-      card.addEventListener("click", () => {
-        game.flipCard(card);
-      });
-    });
-  }
-
-  useEffect(() => {
-    shuffleCards(cardsArray);
-    if (document.readyState == "loading") {
-      document.addEventListener("DOMContentLoaded", ready);
-    } else {
-      ready();
-    }
-  }, []);
-
-  const shuffleCards = (cArray) => {
-    const nArray = [...cArray];
-    for (let i = nArray.length - 1; i > 0; i--) {
-      let randIndex = Math.floor(Math.random() * (i + 1));
-      [nArray[i], nArray[randIndex]] = [nArray[randIndex], nArray[i]];
-    }
-    setCardsArray(nArray);
-  };
+  const location = useLocation();
 
   return (
-    <>
-      <GameTitleAndOverlays />
-      <GameContainer cardsArray={cardsArray} />
-    </>
+    <Routes location={location} key={location.pathname}>
+      <Route path="/" element={<GameHome />} />
+      <Route path="/*" element={<GameHome />} />
+    </Routes>
   );
 }
 
